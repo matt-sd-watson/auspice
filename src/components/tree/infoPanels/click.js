@@ -200,6 +200,8 @@ const StrainName = ({children}) => (
 
 const SampleDate = ({node, t}) => {
   const date = getTraitFromNode(node, "num_date");
+  const dateArray = numericToCalendar(date).toString().split('-').splice(0, 2);
+ 	const newDate = dateArray.join('-').toString(); 
   if (!date) return null;
 
   const dateUncertainty = getTraitFromNode(node, "num_date", {confidence: true});
@@ -212,7 +214,7 @@ const SampleDate = ({node, t}) => {
     );
   }
 
-  return item(t("Collection date"), numericToCalendar(date));
+  return item(t("Collection date"), newDate);
 };
 
 const getTraitsToDisplay = (node) => {
