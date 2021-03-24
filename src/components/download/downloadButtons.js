@@ -44,7 +44,7 @@ export const DownloadButtons = ({dispatch, t, tree, entropy, metadata, colorBy, 
         onClick={() => helpers.exportTree({dispatch, filePrefix, tree, colorings: metadata.colorings, colorBy, temporal})}
       />
       <Button
-        name="Metadata (TSV)"
+        name="Metadata (CSV)"
         description={`Per-sample metadata (n = ${selectedTipsCount}).`}
         icon={<MetaIcon width={iconWidth} selected />}
         onClick={() => helpers.strainTSV(dispatch, filePrefix, tree.nodes, metadata.colorings, tree.visibility)}
@@ -59,7 +59,7 @@ export const DownloadButtons = ({dispatch, t, tree, entropy, metadata, colorBy, 
       )}
       {entropy.loaded && (
         <Button
-          name="Genetic diversity data (TSV)"
+          name="Genetic diversity data (CSV)"
           description={`The data behind the diversity panel showing ${entropy.showCounts?`a count of changes across the tree`:`normalised shannon entropy`} per ${mutType==="nuc"?"nucleotide":"codon"}.`}
           icon={<MetaIcon width={iconWidth} selected />}
           onClick={() => helpers.entropyTSV(dispatch, filePrefix, entropy, mutType)}
