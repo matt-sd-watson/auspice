@@ -52,15 +52,17 @@ const BranchLength = ({node, t}) => {
 
   if (numDate !== undefined) {
     const date = numericToCalendar(numDate);
+    const dateArray = date.toString().split('-').splice(0, 2);
+    const newDate = dateArray.join('-').toString(); 
     const numDateConfidence = getTraitFromNode(node, "num_date", {confidence: true});
     if (numDateConfidence && numDateConfidence[0] !== numDateConfidence[1]) {
-      elements.push(<InfoLine name={t("Inferred Date")+":"} value={date} key="inferredDate"/>);
+      elements.push(<InfoLine name={t("Inferred Date")+":"} value={newDate} key="inferredDate"/>);
       const dateRange = [numericToCalendar(numDateConfidence[0]), numericToCalendar(numDateConfidence[1])];
       if (dateRange[0] !== dateRange[1]) {
         elements.push(<InfoLine name={t("Date Confidence Interval")+":"} value={`(${dateRange[0]}, ${dateRange[1]})`} key="dateConf"/>);
       }
     } else {
-      elements.push(<InfoLine name={t("Date")+":"} value={date} key="date"/>);
+      elements.push(<InfoLine name={t("Date")+":"} value={newDate} key="date"/>);
     }
   }
 
