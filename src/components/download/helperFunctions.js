@@ -205,7 +205,9 @@ export const strainTSV = (dispatch, filePrefix, nodes, colorings, nodeVisibiliti
       if (numDateConfidence && numDateConfidence[0] !== numDateConfidence[1]) {
         tipTraitValues[node.name][traitName] = `${numericToCalendar(numDate)} (${numericToCalendar(numDateConfidence[0])} - ${numericToCalendar(numDateConfidence[1])})`;
       } else {
-        tipTraitValues[node.name][traitName] = numericToCalendar(numDate);
+        const dateArray = numericToCalendar(numDate).toString().split('-').splice(0, 2);
+    	  const newDate = dateArray.join('-').toString(); 
+        tipTraitValues[node.name][traitName] = newDate;
       }
     }
 
@@ -242,17 +244,17 @@ export const strainTSV = (dispatch, filePrefix, nodes, colorings, nodeVisibiliti
   const header = headerFields.map((n) => {
     return (colorings && colorings[n] && colorings[n].title) ? colorings[n].title : n;
   });
-  const linesToWrite = [header.join("\t")];
+  const linesToWrite = [header.join(",")];
   for (const data of Object.values(tipTraitValues)) {
     const thisLine = [];
     for (const trait of headerFields) {
       thisLine.push(data[trait] || "");
     }
-    linesToWrite.push(thisLine.join("\t"));
+    linesToWrite.push(thisLine.join(","));
   }
 
   /* write out information we've collected */
-  const filename = `${filePrefix}_metadata.tsv`;
+  const filename = `${filePrefix}_metadata.csv`;
   write(filename, MIME.tsv, linesToWrite.join("\n"));
   dispatch(infoNotification({message: `Metadata exported to ${filename}`}));
 };
@@ -503,17 +505,17 @@ export const SVG = (dispatch, t, metadata, nodes, filters, visibility, visibleSt
 };
 
 export const entropyTSV = (dispatch, filePrefix, entropy, mutType) => {
-  const lines = mutType === "nuc" ? ["base"] : ["gene\tposition"];
-  lines[0] += entropy.showCounts ? "\tevents" : "\tentropy";
+  const lines = mutType === "nuc" ? ["base"] : ["gene,position"];
+  lines[0] += entropy.showCounts ? ",events" : ",entropy";
   entropy.bars.forEach((bar) => {
     if (mutType === "nuc") {
-      lines.push(`${bar.x}\t${bar.y}`);
+      lines.push(`${bar.x}, ${bar.y}`);
     } else {
-      lines.push(`${bar.prot}\t${bar.codon}\t${bar.y}`);
+      lines.push(`${bar.prot}, ${bar.codon}, ${bar.y}`);
     }
   });
   /* write out information we've collected */
-  const filename = `${filePrefix}_diversity.tsv`;
+  const filename = `${filePrefix}_diversity.csv`;
   write(filename, MIME.tsv, lines.join("\n"));
   dispatch(infoNotification({message: `Diversity data exported to ${filename}`}));
 };
