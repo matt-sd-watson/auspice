@@ -164,7 +164,7 @@ export const modifySVG = function modifySVG(elemsToUpdate, svgPropsToUpdate, tra
   }
   if (elemsToUpdate.has('.regression')) {
     this.removeRegression();
-    if (this.layout === "clock" && this.distance === "num_date") this.drawRegression();
+    if (this.regression) this.drawRegression();
   }
 
   /* confidence intervals */
@@ -213,7 +213,7 @@ export const modifySVGInStages = function modifySVGInStages(elemsToUpdate, svgPr
     this.drawTips();
     if (this.vaccines) this.drawVaccines();
     this.showTemporalSlice();
-    if (this.layout === "clock" && this.distance === "num_date") this.drawRegression();
+    if (this.regression) this.drawRegression();
     if (elemsToUpdate.has(".branchLabel")) this.drawBranchLabels(this.params.branchLabelKey);
   };
 

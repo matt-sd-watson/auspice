@@ -1,7 +1,8 @@
 /* eslint-disable no-multi-spaces */
 /* eslint-disable space-infix-ops */
-import { min, max, sum } from "d3-array";
+import { min, max } from "d3-array";
 import { addLeafCount } from "./helpers";
+import { calculateRegressionThroughRoot, calculateRegressionWithFreeIntercept } from "./regression";
 import { timerStart, timerEnd } from "../../../util/perf";
 import { getTraitFromNode, getDivFromNode } from "../../../util/treeMiscHelpers";
 
@@ -22,9 +23,17 @@ export const setLayout = function setLayout(layout, scatterVariables) {
   } else {
     this.layout = layout;
   }
-  this.scatterVariables = scatterVariables;
+
+  // remove any regression. This will be recalculated if required.
+  this.regression = undefined;
+
+  // assign scatterVariables, needed for clock / scatter layouts.
+  // P.S. we overwrite the x & y axis for clock views _only_ within PhyloTree. This allows
+  // the scatterplot variables to be remembered while viewing other layouts
+  if (scatterVariables) this.scatterVariables = {...scatterVariables};
   if (this.layout === "clock") {
-    this.scatterVariables = {x: "num_date", y: "div", showBranches: true};
+    this.scatterVariables.x="num_date";
+    this.scatterVariables.y="div";
   }
 
   if (this.layout === "rect") {
@@ -58,34 +67,6 @@ export const rectangularLayout = function rectangularLayout() {
       d.yCross = d.y;
     });
   }
-};
-
-/**
- * this function calculates a regression between
- * num_date and div which is saved as this.regression
- */
-export const calculateRegression = function calculateRegression() {
-  const nTips = this.numberOfTips;
-  // REGRESSION WITH FREE INTERCEPT
-  // const meanDiv = d3.sum(this.nodes.filter((d)=>d.terminal).map((d)=>d.y))/nTips;
-  // const meanTime = d3.sum(this.nodes.filter((d)=>d.terminal).map((d)=>d.depth))/nTips;
-  // const covarTimeDiv = d3.sum(this.nodes.filter((d)=>d.terminal).map((d)=>(d.y-meanDiv)*(d.depth-meanTime)))/nTips;
-  // const varTime = d3.sum(this.nodes.filter((d)=>d.terminal).map((d)=>(d.depth-meanTime)*(d.depth-meanTime)))/nTips;
-  // const slope = covarTimeDiv/varTime;
-  // const intercept = meanDiv-meanTime*slope;
-  // REGRESSION THROUGH ROOT
-  const offset = this.nodes[0].depth;
-  const XY = sum(
-    this.nodes.filter((d) => d.terminal)
-      .map((d) => (d.y) * (d.depth - offset))
-  ) / nTips;
-  const secondMomentTime = sum(
-    this.nodes.filter((d) => d.terminal)
-      .map((d) => (d.depth - offset) * (d.depth - offset))
-  ) / nTips;
-  const slope = XY / secondMomentTime;
-  const intercept = -offset * slope;
-  this.regression = {slope: slope, intercept: intercept};
 };
 
 /**
@@ -125,7 +106,11 @@ export const scatterplotLayout = function scatterplotLayout() {
     });
   }
 
-  this.calculateRegression();
+  if (this.scatterVariables.showRegression) {
+    this.regression = this.layout==="clock" ?
+      calculateRegressionThroughRoot(this.nodes, this.yScale) :
+      calculateRegressionWithFreeIntercept(this.nodes);
+  }
 
 };
 
@@ -423,11 +408,11 @@ export const mapToScreen = function mapToScreen() {
   }
 
   // assign the branches as path to each node for the different layouts
-  if (this.layout==="clock" || this.layout==="unrooted") {
+  if (this.layout==="unrooted") {
     this.nodes.forEach((d) => {
       d.branch = [" M "+d.xBase.toString()+","+d.yBase.toString()+" L "+d.xTip.toString()+","+d.yTip.toString(), ""];
     });
-  } else if (this.layout==="scatter") {
+  } else if (this.layout==="clock" || this.layout==="scatter") {
     // if nodes are deliberately obscured (as traits may not be set for some nodes), we don't want to render branches joining that node
     if (this.scatterVariables.showBranches) {
       this.nodes.forEach((d) => {

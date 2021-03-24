@@ -25,12 +25,24 @@ export function collectScatterVariables(colorings, scatterVariables, validate=fa
   return {options, selected};
 }
 
-export function getStartingScatterVariables(colorings, distanceMeasure, colorBy) {
-  const {selected} = collectScatterVariables(colorings, {x: distanceMeasure, y: colorBy}, true);
+export function getStartingScatterVariables(scatterVariables, colorings, distanceMeasure, colorBy, isClock) {
+  let x, y;
+  if (!isClock) {
+    const {selected} = (scatterVariables && scatterVariables.x && scatterVariables.y) ?
+      collectScatterVariables(colorings, scatterVariables, true) :
+      collectScatterVariables(colorings, {x: distanceMeasure, y: colorBy}, true);
+    x = selected.x && selected.x.value;
+    y = selected.y && selected.y.value;
+  }
+  const showBranches = (scatterVariables && Object.prototype.hasOwnProperty.call(scatterVariables, "showBranches")) ?
+    scatterVariables.showBranches : true;
+  const showRegression = (scatterVariables && Object.prototype.hasOwnProperty.call(scatterVariables, "showRegression")) ?
+    scatterVariables.showRegression : !!isClock;
   return {
-    x: selected.x && selected.x.value,
-    y: selected.y && selected.y.value,
-    showBranches: true
+    x,
+    y,
+    showBranches,
+    showRegression
   };
 }
 

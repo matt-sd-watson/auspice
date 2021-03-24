@@ -554,10 +554,12 @@ const checkAndCorrectErrorsInState = (state, metadata, query, tree, viewingNarra
     state.sidebarOpen=true;
   }
 
-  /* if we are starting in a scatterplot layout, we need to ensure we have x & v variables */
+  /* if we are starting in a scatterplot-like layout, we need to ensure we have `scatterVariables`
+  If not, we deliberately don't instantiate them, so that they are instantiated when first
+  triggering a scatterplot, thus defaulting to the colorby in use at that time */
   // todo: these should be URL query & JSON definable (and stored as defaults)
-  if (state.layout==="scatter") {
-    state.scatterVariables = getStartingScatterVariables(metadata.colorings, state.distanceMeasure, state.colorBy);
+  if (state.layout==="scatter" || state.layout==="clock") {
+    state.scatterVariables = getStartingScatterVariables({}, metadata.colorings, state.distanceMeasure, state.colorBy, state.layout==="clock");
   }
   return state;
 };
