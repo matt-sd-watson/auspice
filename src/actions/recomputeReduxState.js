@@ -146,6 +146,12 @@ const modifyStateViaURLQuery = (state, query) => {
       state.showTransmissionLines = false;
     }
   }
+  /* parse queries which may modify scatterplot-like views */
+  if (query.branches==="hide") state.scatterVariables.showBranches = false;
+  if (query.regression==="show") state.scatterVariables.showRegression = true;
+  if (query.regression==="hide") state.scatterVariables.showRegression = false;
+  if (query.scatterX) state.scatterVariables.x = query.scatterX;
+  if (query.scatterY) state.scatterVariables.x = query.scatterY;
   return state;
 };
 
@@ -177,6 +183,7 @@ const restoreQueryableStateToDefaults = (state) => {
   state["panelLayout"] = calcBrowserDimensionsInitialState().width > twoColumnBreakpoint ? "grid" : "full";
   state.panelsToDisplay = state.panelsAvailable.slice();
   state.tipLabelKey = strainSymbol;
+  state.scatterVariables = {};
   // console.log("state now", state);
   return state;
 };
@@ -559,8 +566,20 @@ const checkAndCorrectErrorsInState = (state, metadata, query, tree, viewingNarra
   triggering a scatterplot, thus defaulting to the colorby in use at that time */
   // todo: these should be URL query & JSON definable (and stored as defaults)
   if (state.layout==="scatter" || state.layout==="clock") {
-    state.scatterVariables = getStartingScatterVariables({}, metadata.colorings, state.distanceMeasure, state.colorBy, state.layout==="clock");
+    state.scatterVariables = getStartingScatterVariables(
+      state.scatterVariables, metadata.colorings, state.distanceMeasure, state.colorBy, state.layout==="clock"
+    );
+    if (state.layout==="clock") {
+      delete query.scatterX;
+      delete query.scatterY;
+    }
+  } else {
+    delete query.scatterX;
+    delete query.scatterY;
+    delete query.regression;
+    delete query.branches;
   }
+
   return state;
 };
 
