@@ -131,17 +131,12 @@ export const getAcknowledgments = (metadata, dispatch) => {
       </Suspense>
     );
   }
-  
- const NewlineText = (props) => {
-  const text = props.text;
-  const newText = text.split('\n').map(str => <p>{str}</p>);
-  
-  return newText;
-};
 
-  const preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions.\nPublic Health Ontario maintains an internal subs-sampling strategy for the data displayed above. As such, any inferences that users may personally generate\n with these data should not be viewed as absolute or conclusive. Public Health Ontario maintains the right to modify these data at any time."; 
-  const splitText = NewlineText(preambleContent); 
-  const genericPreamble = (<div>{splitText}</div>);
+
+  const preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions."; 
+  const disclaimerPrivacy1 = "Public Health Ontario maintains an internal subs-sampling strategy for the data displayed above. As such, any inferences that users may personally generate"; 
+  const disclaimerPrivacy2 = "with these data should not be viewed as absolute or conclusive. Public Health Ontario maintains the right to modify these data at any time."; 
+  const genericPreamble = (<div>{preambleContent'\n'disclaimerPrivacy1'\n'disclaimerPrivacy2}</div>);
   
 
   if (window.location.hostname === 'nextstrain.org') {
