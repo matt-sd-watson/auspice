@@ -132,8 +132,8 @@ export const getAcknowledgments = (metadata, dispatch) => {
     );
   }
 
-  const preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions.\";
-  const disclaimerPrivacy = "Public Health Ontario maintains an internal subs-sampling strategy for the data displayed above. As such, any inferences that users may personally generate\"; 
+  const preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions.\n";
+  const disclaimerPrivacy = "Public Health Ontario maintains an internal subs-sampling strategy for the data displayed above. As such, any inferences that users may personally generate\n"; 
   const disclaimerPrivacy_2 = "these data should not be viewed as absolute or conclusive. Public Health Ontario maintains the right to modify these data at any time."; 
   const genericPreamble = (<div>{preambleContent + disclaimerPrivacy + disclaimerPrivacy_2}</div>);
 
