@@ -4,7 +4,7 @@ import { transition } from "d3-transition";
 import { easeLinear } from "d3-ease";
 import { timerStart, timerEnd } from "../../../util/perf";
 import { animationInterpolationDuration } from "../../../util/globals";
-import { numericToDateObject, calendarToNumeric, getPreviousDate, getNextDate, dateToString, prettifyDate } from "../../../util/dateHelpers";
+import { numericToDateObject, calendarToNumeric, getPreviousDate, getNextDate, dateToString, dateToStringShort, prettifyDate } from "../../../util/dateHelpers";
 
 export const hideGrid = function hideGrid() {
   if ("majorGrid" in this.groups) {
@@ -175,7 +175,7 @@ export const computeTemporalGridPoints = (xmin, xmax, pxAvailable) => {
   while (proposedDate < overallStopDate) {
     majorGridPoints.push({
       date: proposedDate,
-      position: calendarToNumeric(dateToString(proposedDate)),
+      position: calendarToNumeric(dateToStringShort(proposedDate)),
       name: prettifyDate(majorStep.unit, proposedDate),
       visibility: 'visible',
       axis: "x"
@@ -196,7 +196,7 @@ export const computeTemporalGridPoints = (xmin, xmax, pxAvailable) => {
       const stopDate = majorIdx===majorGridPoints.length-1 ? overallStopDate : majorGridPoints[majorIdx+1].date;
       while (proposedDate < stopDate) {
         minorGridPoints.push({
-          position: calendarToNumeric(dateToString(proposedDate)),
+          position: calendarToNumeric(dateToStringShort(proposedDate)),
           visibility: 'visible',
           axis: "x"
         });
