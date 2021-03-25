@@ -61,10 +61,7 @@ export const calendarToNumeric = (calDate) => {
   return year + fracPart;
 };
 
-const dateArray = dateToString(new Date()).split('-').splice(0, 2);
-const newDate = dateArray.join('-').toString();
-
-export const currentCalDate = () => newDate;
+export const currentCalDate = () => dateToString(new Date());
 
 export const currentNumDate = () => calendarToNumeric(currentCalDate());
 
