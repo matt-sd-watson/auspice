@@ -133,8 +133,8 @@ export const getAcknowledgments = (metadata, dispatch) => {
     );
   }
 
-
-  const preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions.\nPublic Health Ontario maintains an internal subs-sampling strategy for the data displayed above. As such, any inferences that users may personally generate\nwith these data should not be viewed as absolute or conclusive. Public Health Ontario maintains the right to modify these data at any time."; 
+  // conversion of string in react component with new lines using: https://www.npmjs.com/package/react-newline-to-break
+  const preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions.\nPublic Health Ontario maintains an sub-sampling strategy for the data displayed above to limit the number of visible sequences\n to 5000. As such, any inferences that users may personally generatewith these data should not be viewed as absolute or conclusive.\n Public Health Ontario maintains the right to modify and update these data at any time."; 
   const genericPreamble = (<div>{nl2br(preambleContent)}</div>);
   
 
