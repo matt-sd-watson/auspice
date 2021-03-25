@@ -36,9 +36,7 @@ export const numericToCalendar = (numDate) => {
   }
   /* for CE dates, return string in YYYY-MM-DD format */
   const date = numericToDateObject(numDate);
-  const splitDate = date.toString().split('-').splice(0, 2);
- 	const newDate = splitDate.join('-').toString(); 
-  return newDate; 
+  return date; 
 };
 
 /**
