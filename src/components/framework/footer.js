@@ -132,7 +132,7 @@ export const getAcknowledgments = (metadata, dispatch) => {
     );
   }
   
- const NewlineText(props) => {
+ const NewlineText = (props) => {
   const text = props.text;
   const newText = text.split('\n').map(str => <p>{str}</p>);
   
