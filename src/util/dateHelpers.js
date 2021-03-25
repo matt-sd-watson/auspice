@@ -39,6 +39,19 @@ export const numericToCalendar = (numDate) => {
   return date; 
 };
 
+export const numericToCalendarShort = (numDate) => {
+  /* for BCE dates, return the (rounded) year */
+  if (numDate<0) {
+    return Math.round(numDate).toString();
+  }
+  /* for CE dates, return string in YYYY-MM-DD format */
+  const date = numericToDateObject(numDate);
+  const dateCut = date.toString().split('-').splice(0, 2);
+  const shortDate = dateCut.join('-').toString();
+  return shortDate; 
+};
+
+
 /**
  * Convert a calendar date to a numeric one.
  * This function is meant to behave similarly to TreeTime's `numeric_date`
