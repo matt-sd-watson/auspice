@@ -6,8 +6,8 @@ export const dateToString = (date) => {
 };
 
 export const dateToStringShort = (date) => {
-  const date = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; 
-  const dateCut = date.toString().split('-').splice(0, 2);
+  const dateFull = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; 
+  const dateCut = dateFull.toString().split('-').splice(0, 2);
   const shortDate = dateCut.join('-').toString();
   return shortDate; 
   
