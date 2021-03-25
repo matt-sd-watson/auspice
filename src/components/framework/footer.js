@@ -145,7 +145,7 @@ export const getAcknowledgments = (metadata, dispatch) => {
   
 
   if (window.location.hostname === 'nextstrain.org') {
-    return hardCodedFooters(dispatch, newText);
+    return hardCodedFooters(dispatch, genericPreamble);
   }
 
   return (<div>{genericPreamble}</div>);
