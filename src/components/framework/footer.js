@@ -132,14 +132,12 @@ export const getAcknowledgments = (metadata, dispatch) => {
     );
   }
 
-  var preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions. \
-  Public Health Ontario maintains an internal subs-sampling strategy for the data displayed above. As such, any inferences that users may personally generate \
-  these data should not be viewed as absolute or conclusive. Public Health Ontario maintains the right to modify these data at any time."; 
+  var preambleContent = "This work is made possible by the open sharing of genetic data by research groups from all over the world. We gratefully acknowledge their contributions.\nPublic Health Ontario maintains an internal subs-sampling strategy for the data displayed above. As such, any inferences that users may personally generate\n with these data should not be viewed as absolute or conclusive. Public Health Ontario maintains the right to modify these data at any time."; 
   
-  var genericPreamble = (<div>{preambleContent}</div>);
+  let newText = preambleContent.split ('\n').map ((item, i) => <div key={i}>{item}</div>); 
 
   if (window.location.hostname === 'nextstrain.org') {
-    return hardCodedFooters(dispatch, genericPreamble);
+    return hardCodedFooters(dispatch, newText);
   }
 
   return (<div>{genericPreamble}</div>);
