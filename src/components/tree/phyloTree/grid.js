@@ -175,7 +175,7 @@ export const computeTemporalGridPoints = (xmin, xmax, pxAvailable) => {
   while (proposedDate < overallStopDate) {
     majorGridPoints.push({
       date: proposedDate,
-      position: calendarToNumeric(dateToStringShort(proposedDate)),
+      position: calendarToNumeric(dateToString(proposedDate)),
       name: prettifyDate(majorStep.unit, proposedDate),
       visibility: 'visible',
       axis: "x"
@@ -196,7 +196,7 @@ export const computeTemporalGridPoints = (xmin, xmax, pxAvailable) => {
       const stopDate = majorIdx===majorGridPoints.length-1 ? overallStopDate : majorGridPoints[majorIdx+1].date;
       while (proposedDate < stopDate) {
         minorGridPoints.push({
-          position: calendarToNumeric(dateToStringShort(proposedDate)),
+          position: calendarToNumeric(dateToString(proposedDate)),
           visibility: 'visible',
           axis: "x"
         });
