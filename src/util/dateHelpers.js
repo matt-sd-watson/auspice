@@ -5,6 +5,14 @@ export const dateToString = (date) => {
   
 };
 
+export const dateToStringShort = (date) => {
+  const date = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; 
+  const dateCut = date.toString().split('-').splice(0, 2);
+  const shortDate = dateCut.join('-').toString();
+  return shortDate; 
+  
+};
+
 /**
  * Convert a numeric date to a `Date` object
  * This is (for CE dates) meant to be used as the inverse of the TreeTime
