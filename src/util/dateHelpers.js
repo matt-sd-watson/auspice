@@ -36,7 +36,7 @@ export const numericToCalendar = (numDate) => {
   }
   /* for CE dates, return string in YYYY-MM-DD format */
   const date = numericToDateObject(numDate);
-  return date; 
+  return dateToString(date); 
 };
 
 export const numericToCalendarShort = (numDate) => {
