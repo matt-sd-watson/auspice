@@ -5,6 +5,7 @@ import LegendItem from "./item";
 import { headerFont, darkGrey } from "../../../globalStyles";
 import { legendRectSize, legendSpacing, legendMaxLength, fastTransitionDuration, months } from "../../../util/globals";
 import { numericToCalendar } from "../../../util/dateHelpers";
+import { numericToCalendarShort } from "../../../util/dateHelpers";
 import { isColorByGenotype, decodeColorByGenotype } from "../../../util/getGenotype";
 import { TOGGLE_LEGEND } from "../../../actions/types";
 
@@ -148,7 +149,7 @@ class Legend extends React.Component {
       ) {
         return parseInt(label, 10);
       }
-      const [yyyy, mm, dd] = numericToCalendar(label).split('-'); // eslint-disable-line
+      const [yyyy, mm ] = numericToCalendarShort(label).split('-'); // eslint-disable-line
       return `${months[mm]} ${yyyy}`;
     }
     return label;
