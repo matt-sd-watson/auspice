@@ -1,7 +1,10 @@
 import { months } from "./globals";
 
 export const dateToString = (date) => {
-  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; 
+  const fullDate=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; 
+  const splitDate = fullDate.toString().split('-').splice(0, 2);
+ 	const newDate = splitDate.join('-').toString(); 
+  return newDate; 
 };
 
 /**
@@ -18,10 +21,8 @@ export const numericToDateObject = (numDate) => {
   const year = parseInt(numDate, 10);
   const nDaysInYear = isLeapYear(year) ? 366 : 365;
   const nDays = fracPart * nDaysInYear;
-  const date = new Date((new Date(year, 0, 1)).getTime() + nDays*24*60*60*1000);
-  const splitDate = date.toString().split('-').splice(0, 2);
- 	const newDate = splitDate.join('-').toString(); 
-  return newDate; 
+  const date = new Date((new Date(year, 0, 1)).getTime() + nDays*24*60*60*1000); 
+  return date; 
 };
 
 /**
