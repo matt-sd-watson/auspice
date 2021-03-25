@@ -1,10 +1,8 @@
 import { months } from "./globals";
 
 export const dateToString = (date) => {
-  const fullDate=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; 
-  const splitDate = fullDate.toString().split('-').splice(0, 2);
- 	const newDate = splitDate.join('-').toString(); 
-  return newDate; 
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; 
+  
 };
 
 /**
@@ -38,7 +36,9 @@ export const numericToCalendar = (numDate) => {
   }
   /* for CE dates, return string in YYYY-MM-DD format */
   const date = numericToDateObject(numDate);
-  return dateToString(date);
+  const splitDate = date.toString().split('-').splice(0, 2);
+ 	const newDate = splitDate.join('-').toString(); 
+  return newDate; 
 };
 
 /**
