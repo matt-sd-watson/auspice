@@ -1,7 +1,8 @@
 import { months } from "./globals";
 
 export const dateToString = (date) => {
-  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  const stringDate=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  return stringDate; 
 };
 
 /**
@@ -19,7 +20,9 @@ export const numericToDateObject = (numDate) => {
   const nDaysInYear = isLeapYear(year) ? 366 : 365;
   const nDays = fracPart * nDaysInYear;
   const date = new Date((new Date(year, 0, 1)).getTime() + nDays*24*60*60*1000);
-  return date;
+  const splitDate = date.toString().split('-').splice(0, 2);
+ 	const newDate = splitDate.join('-').toString(); 
+  return newDate; 
 };
 
 /**
