@@ -193,6 +193,6 @@ export const prettifyDate = (unit, date) => {
       if (day==="01") return `${year}-${months[month]}`;
       // falls through if not 1st of month
     default:
-      return `${year}-${months[month]}-${day}`;
+      return `${year}-${months[month]}`;
   }
 };
