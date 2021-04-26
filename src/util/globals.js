@@ -213,15 +213,18 @@ export const genotypeSymbol = Symbol('genotype');
  * This API is set to allow tiles to be served for local installs and nextstrain-related projects only.
  * See https://docs.nextstrain.org/projects/auspice/en/stable/customise-client/api.html for more.
  */
+# attempt to re-direct the map token API
+# chnges as aspecified in https://github.com/nextstrain/auspice/issues/1286
+
 export const getMapTilesSettings = () => {
   if (hasExtension("mapTiles")) {
     return getExtension("mapTiles");
   }
   /* defaults */
-  const api = 'https://api.mapbox.com/styles/v1/trvrb/ciu03v244002o2in5hlm3q6w2/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidHJ2cmIiLCJhIjoiY2tqcnM5bXIxMWV1eTJzazN2YXVrODVnaiJ9.7iPttR9a_W7zuYlUCfrz6A';
+  const api = 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
   return {
     api,
-    attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> <a style="font-weight: 700" href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a>',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     mapboxWordmark: true
   };
 };
