@@ -5,10 +5,9 @@ import { easeLinear } from "d3-ease";
 import { timerStart, timerEnd } from "../../../util/perf";
 import { animationInterpolationDuration } from "../../../util/globals";
 import { numericToDateObject, calendarToNumeric, getPreviousDate, getNextDate, dateToString, dateToStringShort, prettifyDate } from "../../../util/dateHelpers";
-=======
 import { guessAreMutationsPerSite } from "./helpers";
 import { numericToDateObject, calendarToNumeric, getPreviousDate, getNextDate, dateToString, prettifyDate } from "../../../util/dateHelpers";
->>>>>>> upstream/master
+
 
 export const hideGrid = function hideGrid() {
   if ("majorGrid" in this.groups) {
