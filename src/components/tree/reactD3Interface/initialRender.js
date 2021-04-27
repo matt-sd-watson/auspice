@@ -12,6 +12,11 @@ export const renderTree = (that, main, phylotree, props) => {
     console.warn("can't run renderTree (not loaded)");
     return;
   }
+  // calculate if branch labels should be rendered
+  let renderBranchLabels = props.canRenderBranchLabels;
+  if (Object.prototype.hasOwnProperty.call(props.scatterVariables, "showBranches") && props.scatterVariables.showBranches===false) {
+    renderBranchLabels=false;
+  }
   /* simply the call to phylotree.render */
   phylotree.render(
     select(ref),
@@ -20,7 +25,7 @@ export const renderTree = (that, main, phylotree, props) => {
     { /* parameters (modifies PhyloTree's defaults) */
       grid: true,
       confidence: props.temporalConfidence.display,
-      branchLabelKey: props.selectedBranchLabel,
+      branchLabelKey: renderBranchLabels && props.selectedBranchLabel,
       orientation: main ? [1, 1] : [-1, 1],
       tipLabels: true,
       showTipLabels: true
@@ -42,6 +47,7 @@ export const renderTree = (that, main, phylotree, props) => {
     treeState.nodeColors,
     treeState.nodeColors.map((col) => rgb(col).brighter([0.65]).toString()),
     treeState.tipRadii, /* might be null */
-    [props.dateMinNumeric, props.dateMaxNumeric]
+    [props.dateMinNumeric, props.dateMaxNumeric],
+    props.scatterVariables
   );
 };

@@ -95,6 +95,9 @@ const createBranchLabelVisibility = (key, layout, totalTipsInView) => {
 };
 
 export const updateBranchLabels = function updateBranchLabels(dt) {
+  if (!this.groups.branchLabels) {
+    return;
+  }
   const visibility = createBranchLabelVisibility(
     this.params.branchLabelKey,
     this.layout,
@@ -115,6 +118,7 @@ export const updateBranchLabels = function updateBranchLabels(dt) {
 };
 
 export const removeBranchLabels = function removeBranchLabels() {
+  this.params.branchLabelKey = undefined;
   if ("branchLabels" in this.groups) {
     this.groups.branchLabels.selectAll("*").remove();
   }
