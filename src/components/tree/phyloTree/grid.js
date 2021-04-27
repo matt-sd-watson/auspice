@@ -4,7 +4,6 @@ import { transition } from "d3-transition";
 import { easeLinear } from "d3-ease";
 import { timerStart, timerEnd } from "../../../util/perf";
 import { animationInterpolationDuration } from "../../../util/globals";
-<<<<<<< HEAD
 import { numericToDateObject, calendarToNumeric, getPreviousDate, getNextDate, dateToString, dateToStringShort, prettifyDate } from "../../../util/dateHelpers";
 =======
 import { guessAreMutationsPerSite } from "./helpers";
