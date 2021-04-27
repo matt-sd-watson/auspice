@@ -268,3 +268,7 @@ const generateConfig = ({extensionPath, devMode=false, customOutputPath, analyze
 };
 
 module.exports = {default: generateConfig};
+
+node: {
+    fs: "empty"
+}
