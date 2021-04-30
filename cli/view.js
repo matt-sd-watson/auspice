@@ -101,7 +101,7 @@ const run = (args) => {
   /* Basic server set up */
   const app = express();
   app.set('port', process.env.PORT || 4000);
-  app.set('host', process.env.HOST || "localhost");
+  app.set('host', process.env.HOST || "0.0.0.0");
   app.use(compression());
   app.use(nakedRedirect({reverse: true})); /* redirect www.name.org to name.org */
 
